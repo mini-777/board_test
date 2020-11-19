@@ -2,9 +2,9 @@ DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_board',
-        'USER': 'root',
-        'PASSWORD': '0575',
-        'HOST': 'localhost',
+        'USER': 'admin',
+        'PASSWORD': 'dkssudgktpdy',
+        'HOST': 'database-1.cip9531xqh6o.ap-northeast-2.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
