@@ -25,7 +25,7 @@ SECRET_KEY = 'kla3(qjwyvg$fv1*7!scq#$vx2!pbtrtpcl))neew*drfrz)6&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['15.165.158.72']
 
 # Application definition
 
