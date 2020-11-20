@@ -7,13 +7,7 @@ from .models import BoardMember
 
 
 def home(request):
-    user_id = request.session.get('user')
-    # print(user_id)
-    if user_id:
-        member = BoardMember.objects.get(pk=user_id)
-        return HttpResponse(member.username)
-
-    return HttpResponse('Home!')
+    return render(request, 'home.html')
 
 
 def login(request):
@@ -68,3 +62,4 @@ def register(request):
             return redirect('/member/login')
 
         return render(request, 'register.html', res_data)
+
