@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>회원가입</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
         <div class="col-12 text-center">
           <h1 >회원가입</h1>
         </div>
@@ -178,7 +173,7 @@
            <form method="post" action=".">
 			   {% csrf_token %}
               <div class="form-group">
-              <label for="username">Username</label>
+              <label for="username">닉네임</label>
               <input
                 type="text"
                 class="form-control"
@@ -187,8 +182,10 @@
                 name="username"
               />
             </div>
+			{% block content %}
+      		{% endblock %}
             <div class="form-group">
-              <label for="email">Email address</label>
+              <label for="email">이메일</label>
               <input
                 type="email"
                 class="form-control"
@@ -198,7 +195,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="password">Password</label>
+              <label for="password">비밀번호</label>
               <input
                 type="password"
                 class="form-control"
@@ -208,7 +205,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="re_password">Re-Password</label>
+              <label for="re_password">비밀번호 확인</label>
               <input
                 type="password"
                 class="form-control"
@@ -223,9 +220,7 @@
 				</div>
 			  </div>
             </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">회원가입</button>
             </form>
         </div>
-
-</body>
-</html>
+{% endblock %}
