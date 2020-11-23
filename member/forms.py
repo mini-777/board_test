@@ -1,5 +1,10 @@
 from django.contrib.auth.hashers import check_password
-
+import sys
+import os
+import hashlib
+import hmac
+import base64
+import time
 from django import forms
 from .models import BoardMember
 
@@ -33,3 +38,4 @@ class LoginForm(forms.Form):
                 self.add_error('password', '비밀번호가 다릅니다!')
             else:
                 self.user_id = member.id
+
