@@ -20,6 +20,7 @@ class BoardMember(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='마지막수정일')
     phone_num = models.CharField(verbose_name='휴대폰 번호', max_length=11)
     address = models.CharField(verbose_name="주소", max_length=200)
+    carNum = models.CharField(verbose_name='차량번호', max_length=100)
 
     def __str__(self):
         return self.username
