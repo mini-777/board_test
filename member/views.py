@@ -61,14 +61,14 @@ def register(request):
             addr = addrMain + addrPost + addrExtra + addrDetail
 
             res_data = {}
-            print( not(request.POST.get('agree1') and request.POST.get('agree2')))
+            print(request.POST.get('agree1'), request.POST.get('agree2'))
             if not (username and password and re_password and email and phoneNum):
                 print('모든 값을 입력하세요!')
             elif not request.session.get('phoneAuth'):
                 print('휴대폰 인증을 받으세요!')
             elif password != re_password:
                 print('비밀번호가 다릅니다')
-            elif not (request.POST.get('agree1') and request.POST.get('agree2')):
+            elif not (request.POST.get('agree1') == 'true' and request.POST.get('agree2') == 'true'):
                 print('약관에 모두 동의해주세요')
             else:
                 context = {'message': 'success'}
