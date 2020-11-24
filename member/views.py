@@ -40,9 +40,11 @@ def logout(request):
 
 @csrf_exempt
 def register(request):
-
     if request.method == "GET":
-        del (request.session['phoneAuth'])
+        try:
+            del (request.session['phoneAuth'])
+        except:
+            pass
         return render(request, 'register.html')
 
     elif request.method == "POST":

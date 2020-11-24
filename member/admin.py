@@ -5,7 +5,7 @@ from .models import BoardMember
 # Register your models here.
 
 class BoardMemberAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'password', 'created_at', 'updated_at', 'phone_num', 'address')
+    list_display = ('username', 'email', 'password', 'created_at', 'updated_at', 'phone_num', 'address', 'carNum')
 
 
 admin.site.register(BoardMember, BoardMemberAdmin)

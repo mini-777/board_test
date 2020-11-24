@@ -190,22 +190,31 @@
                 name="email"
               />
             </div>
-
-				<div class="form-group" style="width: auto;height: auto">
+<div class="form-group">
+				<label for="re_password">차량번호</label>
+              <input
+                type="text"
+                class="form-control"
+                id="carNum"
+                placeholder="차량번호"
+                name="carNum" maxlength="8" />
+	</div>
+				<div class="form-group">
 				<label for="phoneNum">전화번호</label>
-				<input type="tel" class="form-control" id="phoneNum" name="phoneNum" placeholder="(-) 없이 입력하시오" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" />
-				<button class="btn-primary" name="authRegister" id="authRegister" onclick="" value="1" style="width: 80px; height: 30px">인증요청</button><div id="demo"></div>
-					<input type="text" class="form-control" id="authNum" name="authNum" placeholder="인증번호를 입력하시오" pattern="[0-9]{4}" />
+				<input type="tel" class="form-control" id="phoneNum" name="phoneNum" placeholder="(-) 없이 입력하시오" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" style="margin-bottom: 10px" />
+				<button class="btn-primary" name="authRegister" id="authRegister" onclick="" value="1" style="width: 80px; height: 30px; margin-bottom: 10px">인증요청</button><div id="demo"></div>
+					<input type="text" class="form-control" id="authNum" name="authNum" placeholder="인증번호를 입력하시오" pattern="[0-9]{4}"style="margin-bottom: 10px" />
 				<button class="btn-primary" name="authVal" id="authVal" value="1" style="width: 80px; height: 30px" onclick="">인증하기</button>
 			</div>
 			   <div class="form-group" style="display: flex">
 
-			   <input  class="form-control" type="text" name="sample6_postcode" id="sample6_postcode" placeholder="우편번호">
+
 
 					<input type="text" id="sample6_address" name="sample6_address" placeholder="주소" class="form-control">
-
+ <input  class="form-control" type="text" name="sample6_postcode" id="sample6_postcode" placeholder="우편번호">
+				  <input type="text" id="sample6_detailAddress" name="sample6_detailAddress" placeholder="상세주소" class="form-control">
 					<input type="text" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목" class="form-control">
-				   <input type="text" id="sample6_detailAddress" name="sample6_detailAddress" placeholder="상세주소" class="form-control">
+
 				   <input type="button" onclick="sample6_execDaumPostcode()" class="btn-primary" value="우편번호 찾기">
 </div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
