@@ -42,6 +42,7 @@ def logout(request):
 def register(request):
 
     if request.method == "GET":
+        del (request.session['phoneAuth'])
         return render(request, 'register.html')
 
     elif request.method == "POST":
@@ -59,19 +60,20 @@ def register(request):
             addrExtra = request.POST.get('sample6_extraAddress', None)
             addrDetail = request.POST.get('sample6_detailAddress', None)
             addr = addrMain + addrPost + addrExtra + addrDetail
-
             res_data = {}
             print(request.POST.get('agree1'), request.POST.get('agree2'))
-            if not (username and password and re_password and email and phoneNum):
-                print('모든 값을 입력하세요!')
-            elif not request.session.get('phoneAuth'):
-                print('휴대폰 인증을 받으세요!')
+            if not (username and password and re_password and email and phoneNum and addr):
+                message = '모든 값을 입력하세요 !'
+            elif request.session.get('phoneAuth').find(phoneNum) == -1:
+                message = '휴대폰 인증을 받으세요!'
+            elif email.find('@') == -1 and email.find('.') == -1:
+                message = '이메일 양식을 확인해주세요'
             elif password != re_password:
-                print('비밀번호가 다릅니다')
+                message = '비밀번호가 다릅니다'
             elif not (request.POST.get('agree1') == 'true' and request.POST.get('agree2') == 'true'):
-                print('약관에 모두 동의해주세요')
+                message = '약관에 모두 동의해주세요'
             else:
-                context = {'message': 'success'}
+                message = 'success!'
                 member = models.BoardMember(
                     username=username,
                     email=email,
@@ -80,8 +82,8 @@ def register(request):
                     address=addr,
                 )
                 member.save()
-
-                return HttpResponse(json.dumps(context), content_type="application/json")
+            context = {'message': message}
+            return HttpResponse(json.dumps(context), content_type="application/json")
             return render(request, 'register.html', res_data)
         elif request.POST.get('authRegister') == '1':
             try:

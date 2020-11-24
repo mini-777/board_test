@@ -194,7 +194,7 @@
 				<div class="form-group" style="width: auto;height: auto">
 				<label for="phoneNum">전화번호</label>
 				<input type="tel" class="form-control" id="phoneNum" name="phoneNum" placeholder="(-) 없이 입력하시오" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" />
-				<button class="btn-primary" name="authRegister" id="authRegister" onclick="startTimer(300)" value="1" style="width: 80px; height: 30px">인증요청</button><div id="demo"></div>
+				<button class="btn-primary" name="authRegister" id="authRegister" onclick="" value="1" style="width: 80px; height: 30px">인증요청</button><div id="demo"></div>
 					<input type="text" class="form-control" id="authNum" name="authNum" placeholder="인증번호를 입력하시오" pattern="[0-9]{4}" />
 				<button class="btn-primary" name="authVal" id="authVal" value="1" style="width: 80px; height: 30px" onclick="">인증하기</button>
 			</div>
@@ -245,18 +245,23 @@
 <script>
 	var time = 300;
 	$('#authRegister').click( function() {
-		console.log("hello");
-                $.ajax({
-                    url:'/member/register/',
-                    dataType:'json',
-                    type:'POST',
-                    data:{'phoneNum':$('#phoneNum').val(), 'authRegister':$('#authRegister').val()},
-					success: function (response) {
-                    	alert(response.message)
-					}
+		if($('#phoneNum').val().length == 11) {
+			$.ajax({
+				url: '/member/register/',
+				dataType: 'json',
+				type: 'POST',
+				data: {'phoneNum': $('#phoneNum').val(), 'authRegister': $('#authRegister').val()},
+				success: function (response) {
+					document.getElementById('phoneNum').readOnly = true;
+					alert(response.message)
+					startTimer(300);
+				}
 
 
-                });
+			});
+		}else{
+			alert("휴대폰 번호를 확인해주세요 !")
+		}
             })
 	$('#authVal').click( function() {
 		console.log("hello2");
@@ -294,8 +299,10 @@
 						'agree2': $("input:checkbox[name=agree2]").is(":checked"),
 					},
 					success: function (response) {
-                    	if(response.message == "success"){
+                    	if(response.message == "success!"){
                     		document.location.href = '/member/login'
+						}else{
+                    		alert(response.message);
 						}
 					}
 
