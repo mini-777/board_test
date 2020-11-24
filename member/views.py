@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
 import json
+import re
 
 from . import models
 
@@ -77,31 +78,69 @@ def register(request):
                     message = '비밀번호가 다릅니다'
                 elif not (request.POST.get('agree1') == 'true' and request.POST.get('agree2') == 'true'):
                     message = '약관에 모두 동의해주세요'
+                elif len(re.compile('[ |ㄱ-ㅎ|ㅏ-ㅣ]+').sub('', carNum)) == 1 or len(carNum) < 7:
+                    message = '차량번호를 확인하세요 !'
                 else:
                     message = 'success!'
-                    member = models.BoardMember(
-                        username=username,
-                        email=email,
-                        password=make_password(password),
-                        phone_num=phoneNum,
-                        address=addr,
-                        carNum=carNum
-                    )
-                    member.save()
             except:
-                message='휴대폰 인증을 받으세요!'
+                message = '휴대폰 인증을 받으세요!'
+
+            try:
+                userCheck = models.BoardMember.objects.get(username=username)
+            except:
+                userCheck = None
+
+            if userCheck is None:
+                pass
+            else:
+                message = '같은 username이 있습니다 다른 값을 입력하세요 !'
+
+            try:
+                emailCheck = models.BoardMember.objects.get(email=email)
+            except:
+                emailCheck = None
+            if emailCheck is None:
+                pass
+            else:
+                message = '같은 email이 있습니다 다른 값을 입력하세요 !'
+
+
+
+            try:
+                carCheck = models.BoardMember.objects.get(carNum=carNum)
+            except:
+                carCheck = None
+            if carCheck is None:
+                pass
+            else:
+                message = '같은 차량번호가 있습니다 다른 값을 입력하세요 !'
+            if message == 'success!':
+                member = models.BoardMember(
+                    username=username,
+                    email=email,
+                    password=make_password(password),
+                    phone_num=phoneNum,
+                    address=addr,
+                    carNum=carNum
+                )
+                member.save()
             context = {'message': message}
+            carCheck, emailCheck, userCheck = None, None, None, None
             return HttpResponse(json.dumps(context), content_type="application/json")
             return render(request, 'register.html', res_data)
 
         elif request.POST.get('authRegister') == '1':
+
             try:
                 p_num = request.POST.get('phoneNum', None)
-            except KeyError:
-                message = '제대로 입력하세요!'
-            else:
+                phoneCheck = models.BoardMember.objects.get(phone_num=p_num)
+            except:
+                phoneCheck = None
+            if phoneCheck is None:
                 models.auth_phone.objects.update_or_create(phone_number=p_num)
                 message = '인증번호가 전송되었습니다'
+            else:
+                message = '같은 전화번호가 있습니다 다른 값을 입력하세요 !'
             context = {'message': message}
             return HttpResponse(json.dumps(context), content_type="application/json")
         elif request.POST.get('auth') == '1':
