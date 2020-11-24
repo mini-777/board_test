@@ -64,26 +64,8 @@ def register(request):
             addrDetail = request.POST.get('sample6_detailAddress', None)
             addr = addrMain + addrPost + addrExtra + addrDetail
             carNum = request.POST.get('carNum', None)
-            res_data = {}
-            print(request.POST.get('agree1'), request.POST.get('agree2'))
+            message = 'success!'
 
-            try:
-                if request.session.get('phoneAuth').find(phoneNum) == -1:
-                    message = '휴대폰 인증을 받으세요!'
-                elif not (username and password and re_password and email and phoneNum and addr and carNum):
-                    message = '모든 값을 입력하세요 !'
-                elif email.find('@') == -1 and email.find('.') == -1:
-                    message = '이메일 양식을 확인해주세요'
-                elif password != re_password:
-                    message = '비밀번호가 다릅니다'
-                elif not (request.POST.get('agree1') == 'true' and request.POST.get('agree2') == 'true'):
-                    message = '약관에 모두 동의해주세요'
-                elif len(re.compile('[ |ㄱ-ㅎ|ㅏ-ㅣ]+').sub('', carNum)) == 1 or len(carNum) < 7:
-                    message = '차량번호를 확인하세요 !'
-                else:
-                    message = 'success!'
-            except:
-                message = '휴대폰 인증을 받으세요!'
 
             try:
                 userCheck = models.BoardMember.objects.get(username=username)
@@ -104,8 +86,6 @@ def register(request):
             else:
                 message = '같은 email이 있습니다 다른 값을 입력하세요 !'
 
-
-
             try:
                 carCheck = models.BoardMember.objects.get(carNum=carNum)
             except:
@@ -114,6 +94,25 @@ def register(request):
                 pass
             else:
                 message = '같은 차량번호가 있습니다 다른 값을 입력하세요 !'
+            try:
+                if request.session.get('phoneAuth').find(phoneNum) == -1:
+                    message = '휴대폰 인증을 받으세요!'
+            except:
+                message = '휴대폰 인증을 받으세요!'
+
+            if not (request.POST.get('agree1') == 'true' and request.POST.get('agree2') == 'true'):
+                message = '약관에 모두 동의해주세요'
+            elif not (username and password and re_password and email and phoneNum and addr and carNum):
+                message = '모든 값을 입력하세요 !'
+            elif email.find('@') == -1 and email.find('.') == -1:
+                message = '이메일 양식을 확인해주세요'
+            elif len(re.compile('[ |ㄱ-ㅎ|ㅏ-ㅣ]+').sub('', carNum)) <= 1 or len(carNum) < 7:
+                message = '차량번호를 확인하세요 !'
+            elif password != re_password:
+                message = '비밀번호가 다릅니다'
+
+
+
             if message == 'success!':
                 member = models.BoardMember(
                     username=username,
@@ -124,6 +123,7 @@ def register(request):
                     carNum=carNum
                 )
                 member.save()
+
             context = {'message': message}
             carCheck, emailCheck, userCheck = None, None, None
             return HttpResponse(json.dumps(context), content_type="application/json")
