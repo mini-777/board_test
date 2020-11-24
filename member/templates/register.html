@@ -261,9 +261,13 @@
 				type: 'POST',
 				data: {'phoneNum': $('#phoneNum').val(), 'authRegister': $('#authRegister').val()},
 				success: function (response) {
-					document.getElementById('phoneNum').readOnly = true;
-					alert(response.message)
-					startTimer(300);
+					if (response.message != '같은 전화번호가 있습니다 다른 값을 입력하세요 !') {
+						document.getElementById('phoneNum').readOnly = true;
+						alert(response.message)
+						startTimer(300);
+					}else{
+						alert(response.message)
+					}
 				}
 
 

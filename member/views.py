@@ -125,7 +125,7 @@ def register(request):
                 )
                 member.save()
             context = {'message': message}
-            carCheck, emailCheck, userCheck = None, None, None, None
+            carCheck, emailCheck, userCheck = None, None, None
             return HttpResponse(json.dumps(context), content_type="application/json")
             return render(request, 'register.html', res_data)
 
