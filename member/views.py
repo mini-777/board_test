@@ -80,6 +80,7 @@ def register(request):
                     address=addr,
                 )
                 member.save()
+
                 return HttpResponse(json.dumps(context), content_type="application/json")
             return render(request, 'register.html', res_data)
         elif request.POST.get('authRegister') == '1':
