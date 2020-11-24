@@ -321,7 +321,8 @@
 					},
 					success: function (response) {
                     	if(response.message == "success!"){
-                    		document.location.href = '/member/login'
+                    		alert('회원가입 성공 !');
+                    		document.location.href = '/member/login';
 						}else{
                     		alert(response.message);
 						}
