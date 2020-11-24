@@ -252,6 +252,7 @@
 
         </div>
 <script>
+	var isTrue =true;
 	var time = 300;
 	$('#authRegister').click( function() {
 		if($('#phoneNum').val().length == 11) {
@@ -284,10 +285,15 @@
                     type:'POST',
                     data:{'phoneNum':$('#phoneNum').val(), 'authNum':$('#authNum').val(), 'auth':$('#authVal').val()},
 					success: function (response) {
-                    	alert(response.message)
+						if (response.message == '인증에 성공하였습니다 !') {
+							alert(response.message);
+							isTrue = false;
+							document.getElementById("demo").innerHTML = "인증성공";
+						}else{
+							alert(response.message);
+						}
+
 					}
-
-
                 });
             })
 	$('#register').click( function() {
@@ -335,17 +341,19 @@ var min = "";
 	var sec = "";
 
 		var x = function () {
-			//parseInt() : 정수를 반환
-			min = parseInt(time / 60); //몫을 계산
-			sec = time % 60; //나머지를 계산
+			if(isTrue == true) {
+				//parseInt() : 정수를 반환
+				min = parseInt(time / 60); //몫을 계산
+				sec = time % 60; //나머지를 계산
 
-			document.getElementById("demo").innerHTML = min + "분" + sec + "초";
-			time--;
+				document.getElementById("demo").innerHTML = min + "분" + sec + "초";
+				time--;
 
-			//타임아웃 시
-			if (time < 0) {
-				clearInterval(x); //setInterval() 실행을 끝냄
-				document.getElementById("demo").innerHTML = "시간초과";
+				//타임아웃 시
+				if (time < 0) {
+					clearInterval(x); //setInterval() 실행을 끝냄
+					document.getElementById("demo").innerHTML = "시간초과";
+				}
 			}
 		}
 		function  startTimer() {
