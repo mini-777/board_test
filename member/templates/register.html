@@ -306,6 +306,7 @@
 						're_password': $('#re_password').val(),
 						'agree1': $("input:checkbox[name=agree1]").is(":checked"),
 						'agree2': $("input:checkbox[name=agree2]").is(":checked"),
+						'carNum': $('#carNum').val(),
 					},
 					success: function (response) {
                     	if(response.message == "success!"){
