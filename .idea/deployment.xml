@@ -5,6 +5,21 @@
       <paths name="ubuntu@54.180.105.46:22">
         <serverdata>
           <mappings>
+            <mapping deploy="/home/ubuntu/django_board" local="$PROJECT_DIR$" web="/" />
+            <mapping local="" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ubuntu@54.180.105.46:22 (4)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ubuntu@54.180.105.46:22 (5)">
+        <serverdata>
+          <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
