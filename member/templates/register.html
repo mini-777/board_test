@@ -254,6 +254,7 @@
 <script>
 	var isTrue =true;
 	var time = 300;
+	var phoneNum = "";
 	$('#authRegister').click( function() {
 		if($('#phoneNum').val().length == 11) {
 			$.ajax({
@@ -263,7 +264,6 @@
 				data: {'phoneNum': $('#phoneNum').val(), 'authRegister': $('#authRegister').val()},
 				success: function (response) {
 					if (response.message != '같은 전화번호가 있습니다 다른 값을 입력하세요 !') {
-						document.getElementById('phoneNum').readOnly = true;
 						alert(response.message)
 						startTimer(300);
 					}else{
@@ -289,6 +289,7 @@
 							alert(response.message);
 							isTrue = false;
 							document.getElementById("demo").innerHTML = "인증성공";
+							phoneNum = $('#phoneNum').val();
 						}else{
 							alert(response.message);
 						}
@@ -305,7 +306,7 @@
                     type:'POST',
                     data: {
 
-						'phoneNum': $('#phoneNum').val(),
+						'phoneNum': phoneNum,
 						'sample6_extraAddress': $('#sample6_extraAddress').val(),
 						'sample6_detailAddress': $('#sample6_detailAddress').val(),
 						'email': $('#email').val(),
