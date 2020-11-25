@@ -132,7 +132,7 @@
 		부 칙 1. (시행일) 본 약관은 2020년 11월 19일부터 시행됩니다.<br>
 	</div>
 
-	<p class="join-agreement" style="margin: 10px">
+	<p id="check2" class="join-agreement" style="margin: 10px">
 		<input type="checkbox" name="agree1" id="agree1" value="1" title="이용약관동의 체크">위의 <span class="blue-txt">이용약관</span>에 동의합니다.
 	</p>
 
@@ -296,6 +296,9 @@
 					}
                 });
             })
+	$('#check2').click( function () {
+		$("input:checkbox[name=agree2]").prop("checked", true);
+	})
 	$('#register').click( function() {
 		console.log($('#phoneNum').val());
                 $.ajax({
