@@ -132,9 +132,9 @@
 		부 칙 1. (시행일) 본 약관은 2020년 11월 19일부터 시행됩니다.<br>
 	</div>
 
-	<p id="check2" class="join-agreement" style="margin: 10px">
-		<input type="checkbox" name="agree1" id="agree1" value="1" title="이용약관동의 체크">위의 <span class="blue-txt">이용약관</span>에 동의합니다.
-	</p>
+	<label class="cursor" for="agree1">
+		<input type="checkbox" name="agree1" id="agree1" value="1" title="이용약관동의 체크">위의 <span class="blue-txt">이용약관</span>에 동의합니다.</label>
+
 
 	<!-- 개인정보 수집 및 이용에 대한 안내 -->
 	<h4 class="mt20" style="margin: 10px"> 개인정보 수집 및 이용에 대한 안내</h4>
@@ -158,10 +158,10 @@
 		위 개인정보의 수집 및 이용에 대한 동의를 거부할 수 있으나, 동의를 거부할 경우 회원 가입이 제한됩니다.<br>
 	</div>
 
-	<p class="join-agreement" style="margin: 10px">
-		<input type="checkbox" id="agree2" name="agree2" value="1" tabindex="0" title="개인정보수집동의 체크">위의 <span class="blue-txt">개인정보 수집 및 이용에 대한 안내</span>에 동의합니다.
-	</p>
-
+	<label for="agree2" class="cursor">
+		<input type="checkbox" id="agree2" name="agree2" value="1" tabindex="0" title="개인정보수집동의 체크">위의 <span class="blue-txt">개인정보 수집 및 이용에 대한 안내</span>에 동의합니다.</label>
+<br>
+		<label class="cursor" for="agreeAll" onclick="agreeAll()"><input type="checkbox" id="agreeAll" name="agreeAll" value="1" title="이용약관동의 체크">위의 이용약관과 개인정보 수집 및 이용에 대한 안내에 모두 동의합니다</label>
 <!--	<div class="all-agreement" style="margin: 10px">-->
 <!--		<p class="join-agreement">-->
 <!--			<input type="checkbox" name="checkAll" id="checkAll" title="모든 이용약관동의 및 개인정보수집동의 체크">위의 모든 <span class="blue-txt">이용약관 및 개인정보 수집 및 이용에 대한 안내</span>에 동의합니다.-->
@@ -296,9 +296,7 @@
 					}
                 });
             })
-	$('#check2').click( function () {
-		$("input:checkbox[name=agree2]").prop("checked", true);
-	})
+
 	$('#register').click( function() {
 		console.log($('#phoneNum').val());
                 $.ajax({
@@ -338,7 +336,16 @@
 
 
 
+ function agreeAll() { // 모두 동의하게 만드는 함수
+		if ($("input:checkbox[id=agreeAll]").is(":checked")) {
+			$("input:checkbox[id=agree1]").prop("checked", true);
+			$("input:checkbox[id=agree2]").prop("checked", true);
+		}else{
+			$("input:checkbox[id=agree1]").prop("checked", false);
+			$("input:checkbox[id=agree2]").prop("checked", false);
+		}
 
+ }
 
 	//setInterval(함수, 시간) : 주기적인 실행
 var min = "";
