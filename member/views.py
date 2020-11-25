@@ -2,9 +2,6 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 from .forms import LoginForm
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
 import json
 import re
