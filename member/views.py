@@ -8,7 +8,6 @@ import re
 
 from . import models
 
-
 def home(request):
     return render(request, 'home.html')
 
@@ -97,10 +96,10 @@ def register(request):
                     message = '휴대폰 인증을 받으세요!'
             except:
                 message = '휴대폰 인증을 받으세요!'
-
+            print(username,password, re_password, email, phoneNum, addr, carNum)
             if not (request.POST.get('agree1') == 'true' and request.POST.get('agree2') == 'true'):
                 message = '약관에 모두 동의해주세요'
-            elif not (username and password and re_password and email and phoneNum and addr and carNum):
+            elif not (username and password and re_password and email and addr and carNum):
                 message = '모든 값을 입력하세요 !'
             elif email.find('@') == -1 and email.find('.') == -1:
                 message = '이메일 양식을 확인해주세요'

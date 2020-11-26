@@ -254,7 +254,7 @@
 <script>
 	var isTrue =true;
 	var time = 300;
-	var phoneNum = "";
+	let phoneNum = "";
 	$('#authRegister').click( function() {
 		if($('#phoneNum').val().length == 11) {
 			$.ajax({
@@ -305,7 +305,6 @@
                     dataType:'json',
                     type:'POST',
                     data: {
-
 						'phoneNum': phoneNum,
 						'sample6_extraAddress': $('#sample6_extraAddress').val(),
 						'sample6_detailAddress': $('#sample6_detailAddress').val(),
