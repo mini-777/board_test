@@ -30,9 +30,6 @@ class BoardMember(models.Model):
         verbose_name = '게시판멤버'
         verbose_name_plural = '게시판멤버'
 
-    def update_date(self):
-        self.updated_at = datetime.now()
-
 
 class auth_phone(TimeStampedModel):
     phone_number = models.CharField(verbose_name='휴대폰 번호', max_length=11)

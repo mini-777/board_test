@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
 from .forms import LoginForm
 from django.views.decorators.csrf import csrf_exempt
+from . import models
 import json
 import re
 
-from . import models
 
 def home(request):
     return render(request, 'home.html')
@@ -63,40 +63,41 @@ def register(request):
             carNum = request.POST.get('carNum', None)
             message = 'success!'
 
-
             try:
                 userCheck = models.BoardMember.objects.get(username=username)
             except:
                 userCheck = None
-
-            if userCheck is None:
-                pass
-            else:
-                message = '같은 username이 있습니다 다른 값을 입력하세요 !'
+            finally:
+                if userCheck is None:
+                    pass
+                else:
+                    message = '같은 username이 있습니다 다른 값을 입력하세요 !'
 
             try:
                 emailCheck = models.BoardMember.objects.get(email=email)
             except:
                 emailCheck = None
-            if emailCheck is None:
-                pass
-            else:
-                message = '같은 email이 있습니다 다른 값을 입력하세요 !'
+            finally:
+                if emailCheck is None:
+                    pass
+                else:
+                    message = '같은 email이 있습니다 다른 값을 입력하세요 !'
 
             try:
                 carCheck = models.BoardMember.objects.get(carNum=carNum)
             except:
                 carCheck = None
-            if carCheck is None:
-                pass
-            else:
-                message = '같은 차량번호가 있습니다 다른 값을 입력하세요 !'
+            finally:
+                if carCheck is None:
+                    pass
+                else:
+                    message = '같은 차량번호가 있습니다 다른 값을 입력하세요 !'
             try:
                 if request.session.get('phoneAuth').find(phoneNum) == -1:
                     message = '휴대폰 인증을 받으세요!'
             except:
                 message = '휴대폰 인증을 받으세요!'
-            print(username,password, re_password, email, phoneNum, addr, carNum)
+
             if not (request.POST.get('agree1') == 'true' and request.POST.get('agree2') == 'true'):
                 message = '약관에 모두 동의해주세요'
             elif not (username and password and re_password and email and addr and carNum):
@@ -107,8 +108,6 @@ def register(request):
                 message = '차량번호를 확인하세요 !'
             elif password != re_password:
                 message = '비밀번호가 다릅니다'
-
-
 
             if message == 'success!':
                 member = models.BoardMember(
@@ -124,7 +123,7 @@ def register(request):
             context = {'message': message}
             carCheck, emailCheck, userCheck = None, None, None
             return HttpResponse(json.dumps(context), content_type="application/json")
-            return render(request, 'register.html', res_data)
+            return render(request, 'register.html')
 
         elif request.POST.get('authRegister') == '1':
 
@@ -156,5 +155,3 @@ def register(request):
                     message = "인증에 실패하였습니다"
             context = {'message': message}
             return HttpResponse(json.dumps(context), content_type="application/json")
-
-        # return render(request, 'register.html')
