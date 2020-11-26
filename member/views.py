@@ -25,12 +25,9 @@ def login(request):
             # session_code 검증하기
             request.session['user'] = form.user_id
             models.BoardMember.objects.update_or_create(id=form.user_id)
-
             return redirect('/')
     else:
-
         form = LoginForm()
-
     return render(request, 'login.html', {'form': form})
 
 
@@ -52,11 +49,8 @@ def register(request):
     elif request.method == "POST":
         if request.POST.get('register') == '1':
             username = request.POST.get('username', None)
-            # print(username)
             password = request.POST.get('password', None)
-            # print(password)
             re_password = request.POST.get('re_password', None)
-            # print(re_password)
             email = request.POST.get('email', None)
             phoneNum = request.POST.get('phoneNum', None)
             addrPost = request.POST.get('sample6_postcode', None)
@@ -120,21 +114,7 @@ def register(request):
             return render(request, 'register.html')
 
         elif request.POST.get('authRegister') == '1':
-
-            try:
-                p_num = request.POST.get('phoneNum', None)
-                phoneCheck = models.BoardMember.objects.get(phone_num=p_num)
-            except:
-                phoneCheck = None
-            finally:
-                if phoneCheck is None:
-                    models.auth_phone.objects.update_or_create(phone_number=p_num)
-                    message = '인증번호가 전송되었습니다'
-                else:
-                    message = '같은 전화번호가 있습니다 다른 값을 입력하세요 !'
-
-            context = {'message': message}
-            return HttpResponse(json.dumps(context), content_type="application/json")
+            return HttpResponse(json.dumps(authRegisterBody(request)), content_type="application/json")
 
         elif request.POST.get('auth') == '1':
             try:
@@ -151,3 +131,20 @@ def register(request):
                     message = "인증에 실패하였습니다"
             context = {'message': message}
             return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+def authRegisterBody(request):
+
+    try:
+        p_num = request.POST.get('phoneNum', None)
+        phoneCheck = models.BoardMember.objects.get(phone_num=p_num)
+    except:
+        phoneCheck = None
+    finally:
+        if phoneCheck is None:
+            models.auth_phone.objects.update_or_create(phone_number=p_num)
+            message = '인증번호가 전송되었습니다'
+        else:
+            message = '같은 전화번호가 있습니다 다른 값을 입력하세요 !'
+
+    return {'message': message}
