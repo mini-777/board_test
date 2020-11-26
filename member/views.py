@@ -48,11 +48,8 @@ def register(request):
     elif request.method == "POST":
         if request.POST.get('register') == '1':
             username = request.POST.get('username', None)
-            # print(username)
             password = request.POST.get('password', None)
-            # print(password)
             re_password = request.POST.get('re_password', None)
-            # print(re_password)
             email = request.POST.get('email', None)
             phoneNum = request.POST.get('phoneNum', None)
             addrPost = request.POST.get('sample6_postcode', None)

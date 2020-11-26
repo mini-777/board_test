@@ -1,14 +1,14 @@
 import requests
-from random import randint
-from django.db import models
-import time
-import datetime
-from django.utils import timezone
-from model_utils.models import TimeStampedModel
 import json
 import hashlib
 import hmac
 import base64
+import time
+import datetime
+from django.utils import timezone
+from model_utils.models import TimeStampedModel
+from random import randint
+from django.db import models
 
 
 # # Create your models here.
@@ -71,8 +71,6 @@ class auth_phone(TimeStampedModel):
             ]
 
         }
-        # "to": [self.phone_number],
-        # "content": "[테스트] 인증 번호 [{}]를 입력해주세요.".format(self.auth_number)
 
         body2 = json.dumps(body)
         headers = {
