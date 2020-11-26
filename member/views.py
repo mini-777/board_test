@@ -23,6 +23,7 @@ def login(request):
         if form.is_valid():
             # session_code 검증하기
             request.session['user'] = form.user_id
+            models.BoardMember.objects.update_or_create(id=form.user_id)
             return redirect('/')
     else:
         form = LoginForm()

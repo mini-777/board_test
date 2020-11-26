@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="ubuntu@54.180.105.46:22" remoteFilesAllowedToDisappearOnAutoupload="false" showEqualInSync="true">
+  <component name="PublishConfigData" serverName="ubuntu@54.180.105.46:22" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="ubuntu@54.180.105.46:22">
         <serverdata>
           <mappings>
             <mapping deploy="/home/ubuntu/django_board" local="$PROJECT_DIR$" web="/" />
-            <mapping local="" />
           </mappings>
         </serverdata>
       </paths>
