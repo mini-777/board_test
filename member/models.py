@@ -11,7 +11,7 @@ from random import randint
 from django.db import models
 
 
-# # Create your models here.
+# make models in here
 class BoardMember(models.Model):
     username = models.CharField(max_length=100, verbose_name='유저ID')
     email = models.EmailField(max_length=100, verbose_name='유저메일')

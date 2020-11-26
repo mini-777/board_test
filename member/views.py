@@ -18,21 +18,25 @@ def agree(request):
 
 def login(request):
     if request.method == "POST":
+
         form = LoginForm(request.POST)
+
         if form.is_valid():
             # session_code 검증하기
             request.session['user'] = form.user_id
             models.BoardMember.objects.update_or_create(id=form.user_id)
+
             return redirect('/')
     else:
+
         form = LoginForm()
+
     return render(request, 'login.html', {'form': form})
 
 
 def logout(request):
     if request.session.get('user'):
         del (request.session['user'])
-
     return redirect('/')
 
 
@@ -41,7 +45,7 @@ def register(request):
     if request.method == "GET":
         try:
             del (request.session['phoneAuth'])
-        except:
+        finally:
             pass
         return render(request, 'register.html')
 
@@ -56,39 +60,31 @@ def register(request):
             addrMain = request.POST.get('sample6_address', None)
             addrExtra = request.POST.get('sample6_extraAddress', None)
             addrDetail = request.POST.get('sample6_detailAddress', None)
-            addr = addrMain + addrPost + addrExtra + addrDetail
             carNum = request.POST.get('carNum', None)
+            addr = addrMain + addrPost + addrExtra + addrDetail
             message = 'success!'
 
             try:
-                userCheck = models.BoardMember.objects.get(username=username)
+                models.BoardMember.objects.get(username=username)
             except:
-                userCheck = None
-            finally:
-                if userCheck is None:
-                    pass
-                else:
-                    message = '같은 username이 있습니다 다른 값을 입력하세요 !'
+                pass
+            else:
+                message = '같은 username이 있습니다 다른 값을 입력하세요 !'
 
             try:
-                emailCheck = models.BoardMember.objects.get(email=email)
+                models.BoardMember.objects.get(email=email)
             except:
-                emailCheck = None
-            finally:
-                if emailCheck is None:
-                    pass
-                else:
-                    message = '같은 email이 있습니다 다른 값을 입력하세요 !'
+                pass
+            else:
+                message = '같은 email이 있습니다 다른 값을 입력하세요 !'
 
             try:
-                carCheck = models.BoardMember.objects.get(carNum=carNum)
+                models.BoardMember.objects.get(carNum=carNum)
             except:
-                carCheck = None
-            finally:
-                if carCheck is None:
-                    pass
-                else:
-                    message = '같은 차량번호가 있습니다 다른 값을 입력하세요 !'
+                pass
+            else:
+                message = '같은 차량번호가 있습니다 다른 값을 입력하세요 !'
+
             try:
                 if request.session.get('phoneAuth').find(phoneNum) == -1:
                     message = '휴대폰 인증을 받으세요!'
@@ -106,7 +102,7 @@ def register(request):
             elif password != re_password:
                 message = '비밀번호가 다릅니다'
 
-            if message == 'success!':
+            if message == 'success!':  # form 에 입력된 정보들 DB에 입력
                 member = models.BoardMember(
                     username=username,
                     email=email,
@@ -116,9 +112,7 @@ def register(request):
                     carNum=carNum
                 )
                 member.save()
-
             context = {'message': message}
-            carCheck, emailCheck, userCheck = None, None, None
             return HttpResponse(json.dumps(context), content_type="application/json")
             return render(request, 'register.html')
 
@@ -129,13 +123,16 @@ def register(request):
                 phoneCheck = models.BoardMember.objects.get(phone_num=p_num)
             except:
                 phoneCheck = None
-            if phoneCheck is None:
-                models.auth_phone.objects.update_or_create(phone_number=p_num)
-                message = '인증번호가 전송되었습니다'
-            else:
-                message = '같은 전화번호가 있습니다 다른 값을 입력하세요 !'
+            finally:
+                if phoneCheck is None:
+                    models.auth_phone.objects.update_or_create(phone_number=p_num)
+                    message = '인증번호가 전송되었습니다'
+                else:
+                    message = '같은 전화번호가 있습니다 다른 값을 입력하세요 !'
+
             context = {'message': message}
             return HttpResponse(json.dumps(context), content_type="application/json")
+
         elif request.POST.get('auth') == '1':
             try:
                 p_num = request.POST.get('phoneNum', None)
@@ -144,7 +141,6 @@ def register(request):
                 message = '제대로 입력하세요!'
             else:
                 result = models.auth_phone.check_auth_number(p_num, a_num)
-                print(result)
                 if result:
                     message = '인증에 성공하였습니다 !'
                     request.session['phoneAuth'] = p_num

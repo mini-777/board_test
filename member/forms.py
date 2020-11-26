@@ -1,10 +1,4 @@
 from django.contrib.auth.hashers import check_password
-import sys
-import os
-import hashlib
-import hmac
-import base64
-import time
 from django import forms
 from .models import BoardMember
 
@@ -33,7 +27,6 @@ class LoginForm(forms.Form):
                 self.add_error('username', '아이디가 없습니다!')
                 return
                 # 예외처리를 하고 return 을 실행해서 바로 아래 코드를 실행하지 않고 빠져나오게 한다.
-
             if not check_password(password, member.password):
                 self.add_error('password', '비밀번호가 다릅니다!')
             else:
